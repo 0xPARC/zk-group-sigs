@@ -1,9 +1,6 @@
 include "../node_modules/circomlib/circuits/mimcsponge.circom"
-<<<<<<< HEAD
-=======
 include "../node_modules/circomlib/circuits/comparators.circom";
 include "../node_modules/circomlib/circuits/gates.circom"
->>>>>>> f412774 (upgrade main circuit for 40 participants)
 
 /*
   Inputs:
@@ -72,84 +69,4 @@ template Main(GROUP_SIZE) {
   msgAttestation <== mimcAttestation.outs[0];
 }
 
-<<<<<<< HEAD
-component main = Main();
-=======
-//////
-// Inputs:
-//  - hash (pub)
-//  - msgAttestation (pub)
-//  - msg (pub)
-//  - secret
- 
-// Outputs:
-//  - msgAttestation
- 
-// Prove:
-//  - msgAttestation == mimc(msg, secret)
-//  - hash = mimc(secret)
-
-
-template RevealSigner(N) {
-    signal input hash;
-    signal input msg;
-    signal input msgAttestation;
-    signal private input secret;
-
-    // hash = mimc(secret)
-    component mimcHash = MiMCSponge(1, 220, 1);
-    mimcHash.ins[0] <== secret;
-    mimcHash.k <== 0;
-    hash === mimcHash.outs[0];
-
-    // msgAttestation !== mimc(msg, secret)
-    component mimcAttestation = MiMCSponge(2, 220, 1);
-    mimcAttestation.ins[0] <== msg;
-    mimcAttestation.ins[1] <== secret;
-    mimcAttestation.k <== 0;
-
-    msgAttestation === mimcAttestation.outs[0];
-}
-
-
-// denySignature
-
-// Inputs:
-//  - hash (pub)
-//  - msg (pub)
-//  - secret
-
-// Outputs:
-//  - msgAttestation 
-
-// Prove
-//  - msgAttestation != mimc(msg, secret)
-//  - hash = mimc(secret)
-
-template DenySignature() {
-    signal input hash;
-    signal input msgAttestation;
-    signal input msg;
-    signal private input secret;
-
-    // hash = mimc(secret)
-    component mimcHash = MiMCSponge(1, 220, 1);
-    mimcHash.ins[0] <== secret;
-    mimcHash.k <== 0;
-    hash === mimcHash.outs[0];
-
-     // msgAttestation == mimc(msg, secret)
-    component mimcAttestation = MiMCSponge(2, 220, 1);
-    mimcAttestation.ins[0] <== msg;
-    mimcAttestation.ins[1] <== secret;
-    mimcAttestation.k <== 0;
-  
-    component areMessagesEql = IsEqual();
-    areMessagesEql.in[0] <== msgAttestation;
-    areMessagesEql.in[1] <== mimcAttestation.outs[0];
-
-    areMessagesEql.out === 0;
-}
-
 component main = Main(40);
->>>>>>> f412774 (upgrade main circuit for 40 participants)
