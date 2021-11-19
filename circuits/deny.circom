@@ -14,10 +14,10 @@ include "../node_modules/circomlib/circuits/comparators.circom";
 */
 
 template DenySignature() {
-    signal input hash;
-    signal input msgAttestation;
-    signal input msg;
     signal private input secret;
+    signal input hash;
+    signal input msg;
+    signal input msgAttestation;
 
     // hash = mimc(secret)
     component mimcHash = MiMCSponge(1, 220, 1);

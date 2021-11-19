@@ -7,19 +7,16 @@ include "../node_modules/circomlib/circuits/mimcsponge.circom"
    - msg (pub)
    - secret
  
-  Outputs:
-   - msgAttestation
- 
   Prove:
    - msgAttestation == mimc(msg, secret)
    - hash = mimc(secret)
 */
 
 template RevealSigner() {
+    signal private input secret;
     signal input hash;
     signal input msg;
     signal input msgAttestation;
-    signal private input secret;
 
     // hash = mimc(secret)
     component mimcHash = MiMCSponge(1, 220, 1);
