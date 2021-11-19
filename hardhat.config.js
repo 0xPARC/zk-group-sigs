@@ -8,6 +8,6 @@ module.exports = {
 	circom: {
 		inputBasePath: "./circuits",
 		ptau: "pot15_final.ptau",
-		circuits: [{ name: "sign" }],
+		circuits: [{ name: "sign" }, {name: "reveal"}, {name: "deny"}],
 	},
 }
